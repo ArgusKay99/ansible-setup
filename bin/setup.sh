@@ -41,13 +41,14 @@ function ensurePackageIsInstalled() {
     fi
 }
 
-
+localDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+repositoryRoot="${localDir}/.."
 
 echoinfo "starting setup script"
 
 ensurePackageIsInstalled ansible
 
 echoinfo "running ansible playbook.yml"
-ansible-playbook playbook.yml
+ansible-playbook "${repositoryRoot}/playbook.yml"
 
 echok "script finished"
