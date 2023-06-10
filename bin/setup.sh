@@ -41,6 +41,18 @@ function ensurePackageIsInstalled() {
     fi
 }
 
+function installPlaybook() {
+    local infoMessage
+    infoMessage="${1}"
+
+    local pathToPlaybook
+    pathToPlaybook="${2}"
+
+    echoinfo "${infoMessage}"
+    ansible-playbook "${pathToPlaybook}"
+    failOnError ${?} "failed to install playbook: ${pathToPlaybook}"
+}
+
 localDir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 repositoryRoot="${localDir}/.."
 
@@ -48,7 +60,20 @@ echoinfo "starting setup script"
 
 ensurePackageIsInstalled ansible
 
-echoinfo "running ansible playbook.yml"
-ansible-playbook "${repositoryRoot}/playbook.yml"
+# ansible plugins
+echoinfo "installing ansible plugins"
 
-echok "script finished. Happy Hacking :)"
+ansible-galaxy install igor_mukhin.bash_aliases
+failOnError ${?} "failed to install ansible addon: igor_mukhin.bash_aliases"
+
+echok "all ansible plugins installed"
+
+
+# running playbooks
+echoinfo "running ansible playbooks"
+
+installPlaybook "install core packages" "${repositoryRoot}/playbook.yml"
+installPlaybook "create user" "${repositoryRoot}/playbooks/createUser/createUser.yml"
+
+
+echok "everything installed. Happy Hacking :)"
