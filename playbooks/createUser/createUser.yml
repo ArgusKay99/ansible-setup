@@ -1,0 +1,18 @@
+---
+- name: Create main user
+  tags: main-user
+  user:
+    name: "arguskay"
+    groups: # Empty by default, here we give it some groups
+      - sudo
+    state: present
+    shell: /bin/bash       # Defaults to /bin/bash
+    system: no             # Defaults to no
+    createhome: yes        # Defaults to yes
+    home: /home/arguskay  # Defaults to /home/<username>
+- name: Set authorized key for main user took from file
+  tags: main-user
+  authorized_key:
+    user: "arguskay"
+    state: present
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCnDpJc1Dw50bupT0kGOSJ5iiVx6YBUolGtQfQrCBetU3r2pgRGNCcAcVBCLBhAC/qRzE1UcWONekAIU5oJ8PafHzNiYW6w+WNdG+1PAF5z7IVk/wGqWaw8tJ/CBksVphcFmnELYHXaWME3sltn1p90eWJsU4ugKIpjK6M71TRy7wy46yYvMfrkFkaV1AHuXko9419rXras9H3qfCKy9UhfeEBfk3enzR4BAW//2Hfnvg8tysEA/TLoFQdVBYpfqRWKyc0QhIHh0GMeoeFTQzKgWKfMEunUeBTDyVTB+JsGfo9Nt2w7oLSc51RfCM9rwtAoWVkwylwWIG5RrYWmN93oJyBny9AFWlQb6Tpl0WP+UpJfYQ59j07+mtTriRNNeP1q0rV8hWF7JNfUsWx0ZgRWT1fX7VOo03bzj2sf93iHvUyMHkvy8s9bd15EV4TkLCOxrDRM43ejBcBD7EWri6h3W6SwzVkC8pcZvJmiytSetIKM7So+w0lPe3J0gGmvEDJmtLO3Vh1YgLWO6Z+rzQ5+MGggBrywpca5vjt0ooSylrSf0Ky4CeT4J2SKEQDxmBoGNFy3c9BIqpGIoMRvm+jjGh7sZZ7eOn5lBslBFuJ97Ef8OhMNbZu4cqveK3v9frjnZYPYXdJK+0y67d15CABsaKJYhK3oEkQ1JkJ57kb2ow== id_rsa"
