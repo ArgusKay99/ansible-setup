@@ -51,4 +51,4 @@ ensurePackageIsInstalled ansible
 echoinfo "running ansible playbook.yml"
 ansible-playbook "${repositoryRoot}/playbook.yml"
 
-echok "script finished"
+echok "script finished. Happy Hacking :)"
