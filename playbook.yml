@@ -1,0 +1,27 @@
+#playbook.yml
+---
+- name: Appending items to an existing list
+  hosts: localhost
+  gather_facts: no
+  vars:
+    my_list:
+      - item1
+      - item2
+  tasks:
+    - name: Append item3 to list
+      set_fact:
+        my_list: "{{ my_list + ['item3'] }}"
+    - debug:
+        var: my_list
+    - name: install my core packages
+      become: true
+      become_user: root
+      apt:
+        state: present
+        name:
+          - ripgrep
+          - htop
+          - tmux
+          - screen
+          - fzf
+          - jq
